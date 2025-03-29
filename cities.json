@@ -1,0 +1,218 @@
+[
+  {
+    "name": "Shanghai",
+    "country": "China",
+    "latitude": 31.2323437,
+    "longitude": 121.4691024
+  },
+  {
+    "name": "Beijing",
+    "country": "China",
+    "latitude": 39.9057136,
+    "longitude": 116.3912972
+  },
+  {
+    "name": "Dhaka",
+    "country": "Bangladesh",
+    "latitude": 23.7644025,
+    "longitude": 90.389015
+  },
+  {
+    "name": "Chengdu",
+    "country": "China",
+    "latitude": 30.6598628,
+    "longitude": 104.0633717
+  },
+  {
+    "name": "Delhi",
+    "country": "India",
+    "latitude": 28.6517178,
+    "longitude": 77.2219388
+  },
+  {
+    "name": "Istanbul",
+    "country": "Turkey",
+    "latitude": 41.0091982,
+    "longitude": 28.9662187
+  },
+  {
+    "name": "Karachi",
+    "country": "Pakistan",
+    "latitude": 24.8546842,
+    "longitude": 67.0207055
+  },
+  {
+    "name": "Guangzhou",
+    "country": "China",
+    "latitude": 23.1301964,
+    "longitude": 113.2592945
+  },
+  {
+    "name": "Tianjin",
+    "country": "China",
+    "latitude": 39.084802,
+    "longitude": 117.1959904
+  },
+  {
+    "name": "Tokyo",
+    "country": "Japan",
+    "latitude": 35.6812665,
+    "longitude": 139.757653
+  },
+  {
+    "name": "Suzhou",
+    "country": "China",
+    "latitude": 31.3016935,
+    "longitude": 120.5810725
+  },
+  {
+    "name": "Moscow",
+    "country": "Russia",
+    "latitude": 55.7504461,
+    "longitude": 37.6174943
+  },
+  {
+    "name": "Shenzhen",
+    "country": "China",
+    "latitude": 22.5445741,
+    "longitude": 114.0545429
+  },
+  {
+    "name": "Wuhan",
+    "country": "China",
+    "latitude": 30.5951051,
+    "longitude": 114.2999353
+  },
+  {
+    "name": "Mumbai",
+    "country": "India",
+    "latitude": 19.0785451,
+    "longitude": 72.878176
+  },
+  {
+    "name": "São Paulo",
+    "country": "Brazil",
+    "latitude": -23.5506507,
+    "longitude": -46.6333824
+  },
+  {
+    "name": "Jakarta",
+    "country": "Indonesia",
+    "latitude": -6.1753942,
+    "longitude": 106.827183
+  },
+  {
+    "name": "Seoul",
+    "country": "South Korea",
+    "latitude": 37.5666791,
+    "longitude": 126.9782914
+  },
+  {
+    "name": "Kinshasa",
+    "country": "Democratic Republic of the Congo",
+    "latitude": -4.3217055,
+    "longitude": 15.3125999
+  },
+  {
+    "name": "Lagos",
+    "country": "Nigeria",
+    "latitude": 6.5243793,
+    "longitude": 3.3792057
+  },
+  {
+    "name": "Cairo",
+    "country": "Egypt",
+    "latitude": 30.0443879,
+    "longitude": 31.2357257
+  },
+  {
+    "name": "Mexico City",
+    "country": "Mexico",
+    "latitude": 19.4326296,
+    "longitude": -99.1331785
+  },
+  {
+    "name": "London",
+    "country": "United Kingdom",
+    "latitude": 51.5073219,
+    "longitude": -0.1276474
+  },
+  {
+    "name": "Bangkok",
+    "country": "Thailand",
+    "latitude": 13.7524938,
+    "longitude": 100.4935089
+  },
+  {
+    "name": "Buenos Aires",
+    "country": "Argentina",
+    "latitude": -34.6075682,
+    "longitude": -58.4370894
+  },
+  {
+    "name": "Hong Kong",
+    "country": "China",
+    "latitude": 22.2793278,
+    "longitude": 114.1628131
+  },
+  {
+    "name": "Baghdad",
+    "country": "Iraq",
+    "latitude": 33.3035667,
+    "longitude": 44.3717732
+  },
+  {
+    "name": "Tehran",
+    "country": "Iran",
+    "latitude": 35.6892523,
+    "longitude": 51.3896004
+  },
+  {
+    "name": "Riyadh",
+    "country": "Saudi Arabia",
+    "latitude": 24.638916,
+    "longitude": 46.7160101
+  },
+  {
+    "name": "Santiago",
+    "country": "Chile",
+    "latitude": -33.4377756,
+    "longitude": -70.6504502
+  },
+  {
+    "name": "Singapore",
+    "country": "Singapore",
+    "latitude": 1.2899175,
+    "longitude": 103.8519072
+  },
+  {
+    "name": "Ankara",
+    "country": "Turkey",
+    "latitude": 39.9207779,
+    "longitude": 32.854067
+  },
+  {
+    "name": "Washington, D.C.",
+    "country": "United States",
+    "latitude": 38.8950368,
+    "longitude": -77.0365427
+  },
+  {
+    "name": "Kuala Lumpur",
+    "country": "Malaysia",
+    "latitude": 3.1516964,
+    "longitude": 101.6942371
+  },
+  {
+    "name": "Addis Ababa",
+    "country": "Ethiopia",
+    "latitude": 9.0107934,
+    "longitude": 38.7612525
+  },
+  {
+    "name": "Hanoi",
+    "country": "Vietnam",
+    "latitude": 21.028511,
+    "longitude": 105.804817
+  }
+]

@@ -12,4 +12,8 @@ pouzivat vezrovaci system pro schema databaze, liquidbase, flyway
 tech stack:
 react-native, express api, postgresql, scylla db
 
+XD
+
 pouzit indexy
+
+zeptat se spanka, jestli jako version control databaze staci git xd
