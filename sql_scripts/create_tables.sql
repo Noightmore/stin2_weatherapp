@@ -1,4 +1,5 @@
--- Create table cities
+-- Create table cities -- nesmi se smazat v pripade smazani weather data,
+-- ale pokud neexistuje zadna weather data co by ji referencovala = smazat ano
 CREATE TABLE cities (
                         id SERIAL PRIMARY KEY,
                         name VARCHAR(255) NOT NULL,
@@ -30,9 +31,10 @@ CREATE TABLE weather_data (
                               -- raw_data JSONB         -- Optional: store the complete JSON response for further analysis
 );
 
--- Create table weather_conditions
+-- Create table weather_conditions -- main table -- referencuje data a conditions
 CREATE TABLE weather_conditions (
                                     id SERIAL PRIMARY KEY,
+                                    record_inserted_at TIMESTAMP WITHOUT TIME ZONE NOT NULL, -- required for data retention
                                     weather_data_id INTEGER REFERENCES weather_data(id),
                                     condition_id INTEGER,
                                     main VARCHAR(100),
@@ -40,7 +42,7 @@ CREATE TABLE weather_conditions (
                                     icon VARCHAR(50)
 );
 
--- Create table precipitation -- main table
+-- Create table precipitation -- nutno predelat
 CREATE TABLE precipitation (
                                id SERIAL PRIMARY KEY,
                                weather_data_id INTEGER REFERENCES weather_data(id),
