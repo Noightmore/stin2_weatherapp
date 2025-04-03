@@ -62,3 +62,6 @@ class HandlerFactory:
         if not api_root or not api_key:
             raise Exception("OPEN_WEATHER_API or OPEN_WEATHER_API_KEY not set in environment variables.")
         return WeatherApiHandler(api_root, api_key)
+
+
+# todo: add postgres handler; add all handler creation methods to this class

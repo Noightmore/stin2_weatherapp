@@ -12,7 +12,7 @@
 
 ### Jupyter notebook + python
 - used as frontend
-- data is aggragated and visualized using jupyter notebook
+- data is aggregated and visualized using jupyter notebook
 - fetching and data processing is done using python 
 
 ## Program structure
