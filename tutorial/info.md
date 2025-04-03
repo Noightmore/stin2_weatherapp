@@ -1,0 +1,1 @@
+this folder contains several notebooks that provide snippets of code for easy visualization of the data and functionality

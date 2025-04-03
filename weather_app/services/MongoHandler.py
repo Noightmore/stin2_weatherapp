@@ -24,6 +24,18 @@ class MongoHandler:
             logging.error("Failed to connect to MongoDB", exc_info=True)
             raise ce
 
+    def verify_connection(self):
+        """
+        Verify the connection to the MongoDB server.
+        """
+        try:
+            self.client.admin.command('ping')
+            logging.info("MongoDB connection verified.")
+            return True
+        except errors.ConnectionFailure as cf:
+            logging.error("MongoDB connection failed", exc_info=True)
+            return False
+
 
     def get_collection(self, collection_name):
         """
