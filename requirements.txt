@@ -143,3 +143,4 @@ pymongo~=4.11.3
 dotenv~=0.9.9
 python-dotenv~=1.1.0
 SQLAlchemy~=2.0.40
+mongomock~=4.3.0
