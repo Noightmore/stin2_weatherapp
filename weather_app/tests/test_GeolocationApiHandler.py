@@ -1,7 +1,7 @@
 import os
 import unittest
 from dotenv import load_dotenv
-from weather_app.services.GeolocationApiHandler import GeolocationApiHandler, ApiHandlerError
+from weather_app.handlers.GeolocationApiHandler import GeolocationApiHandler, ApiHandlerError
 
 class TestGeolocationApiHandler(unittest.TestCase):
 

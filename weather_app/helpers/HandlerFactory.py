@@ -1,11 +1,11 @@
-# File: services/handler_factory.py
+# File: handlers/handler_factory.py
 
 import os
 import logging
 from dotenv import load_dotenv
-from weather_app.services.MongoHandler import MongoHandler
-from weather_app.services.WeatherApiHandler import WeatherApiHandler
-from weather_app.services.GeolocationApiHandler import GeolocationApiHandler
+from weather_app.handlers.MongoHandler import MongoHandler
+from weather_app.handlers.WeatherApiHandler import WeatherApiHandler
+from weather_app.handlers.GeolocationApiHandler import GeolocationApiHandler
 
 class HandlerFactory:
     def __init__(self, env_paths):
@@ -44,8 +44,8 @@ class HandlerFactory:
         if not mongo_url:
             raise Exception("MONGO_URL not set in environment variables.")
         db_name = os.getenv("MONGO_DB", "db_xd")
-        retention_limit = int(os.getenv("MONGO_DB_MAX_DOC_COUNT", "400000"))
-        delete_count = int(os.getenv("MONGO_DB_RETENTION_DELETION_COUNT", "1000"))
+        retention_limit = int(os.getenv("MONGO_DB_MAX_DOC_COUNT", "4000"))
+        delete_count = int(os.getenv("MONGO_DB_RETENTION_DELETION_COUNT", "10"))
         return MongoHandler(mongo_url, db_name, retention_limit=retention_limit, delete_count=delete_count)
 
     def get_weather_handler(self):

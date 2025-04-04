@@ -1,6 +1,6 @@
 import unittest
 import mongomock
-from weather_app.services.MongoHandler import MongoHandler
+from weather_app.handlers.MongoHandler import MongoHandler
 
 class TestMongoHandler_MockDB(unittest.TestCase):
     def setUp(self):

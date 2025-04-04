@@ -1,4 +1,4 @@
-# File: services/WeatherApiHandler.py
+# File: handlers/WeatherApiHandler.py
 
 import os
 import requests
@@ -6,11 +6,15 @@ import time
 import logging
 from datetime import datetime
 import json
-from weather_app.services.ApiHandler import ApiHandler, ApiHandlerError, BadRequestError, UnauthorizedError, \
+from weather_app.handlers.ApiHandler import ApiHandler, ApiHandlerError, BadRequestError, UnauthorizedError, \
     NotFoundError, TooManyRequestsError, UnexpectedError
 
 
 class WeatherApiHandler(ApiHandler):
+    """
+    WARNING THIS CLASS WILL ALWAYS RETURN HOURLY WEATHER FORECAST
+    AS THE HISTORY API DOES NOT SUPPORT DAILY AVERAGE FORECASTS CALLS
+    """
     def __init__(self, api_root, api_key):
         """
         Initialize the WeatherApiHandler.
@@ -43,31 +47,7 @@ class WeatherApiHandler(ApiHandler):
         logging.info("Dummy call successful.")
 
 
-    # def _handle_error(self, response):
-    #     """
-    #     Raise an appropriate exception based on the API response status code.
-    #     """
-    #     code = response.status_code
-    #     # You can parse additional details from response.json() if needed.
-    #     try:
-    #         error_info = response.json()
-    #     except Exception:
-    #         error_info = {}
-    #     if code == 400:
-    #         raise BadRequestError(f"400 - Bad Request: {error_info.get('message', 'Missing or incorrect parameters')}")
-    #     elif code == 401:
-    #         raise UnauthorizedError("401 - Unauthorized: API token missing or invalid for this API")
-    #     elif code == 404:
-    #         raise NotFoundError(f"404 - Not Found: No data found for the requested parameters {error_info}")
-    #     elif code == 429:
-    #         raise TooManyRequestsError("429 - Too Many Requests: API quota exceeded")
-    #     elif 500 <= code < 600:
-    #         raise UnexpectedError(f"{code} - Unexpected Error: Contact support with details of your API request")
-    #     else:
-    #         raise WeatherApiError(f"{code} - Unexpected error (wtf?): {error_info}")
-
-
-    def get_weather_n_days_into_future_by_date(self, city, latitude, longitude, start, count, occurrence_type="daily"):
+    def get_weather_n_days_into_future_by_date(self, city, latitude, longitude, start, count, occurrence_type="day"):
         """
         Call the weather API for a given location starting from the provided start date.
         
@@ -82,6 +62,7 @@ class WeatherApiHandler(ApiHandler):
         :param occurrence_type: Type of forecast. Default is "daily".
         :return: The JSON response from the API.
         """
+
         # Convert the start date string to a Unix timestamp.
         start_ts = int(time.mktime(datetime.strptime(start, "%m/%d/%Y").timetuple()))
         now = int(time.time())
@@ -90,6 +71,11 @@ class WeatherApiHandler(ApiHandler):
             raise WeatherApiError("Start time is in the future.")
         if start_ts + count * 86400 > now:
             raise WeatherApiError("Requested data range goes into the future.")
+
+        # for a reason unkown, most likely due to spanek not really reading openweather api docs before creating this
+        # assignement
+        if occurrence_type == "day":
+            count = count * 24 # adjust for an hour count after the correct time settings has been set
 
         # Build URL based on whether city is provided.
         if city:
@@ -106,7 +92,7 @@ class WeatherApiHandler(ApiHandler):
 
 
 
-    def get_weather_n_days_into_past_by_date(self, city, latidue, longtidue, end, count, occurrence_type="daily"):
+    def get_weather_n_days_into_past_by_date(self, city, latidue, longtidue, end, count, occurrence_type="day"):
         """
         Retrieve weather data for a given location for a specified number of days ending at a given end date.
 
@@ -129,6 +115,11 @@ class WeatherApiHandler(ApiHandler):
         # Compute the start timestamp so that the data covers 'count' days ending at 'end_ts'.
         start_ts = end_ts - count * 86400
 
+        # for a reason unkown, most likely due to spanek not really reading openweather api docs before creating this
+        # assignement
+        if occurrence_type == "day":
+            count = count * 24 # adjust for an hour count after the correct time settings has been set
+
         # Build the URL: if city is provided, use that; otherwise use latitude and longitude.
         if city:
             url = f"{self.api_root}city?q={city}&start={start_ts}&cnt={count}&appid={self.api_key}&type={occurrence_type}"
@@ -143,7 +134,7 @@ class WeatherApiHandler(ApiHandler):
         return self.last_json
 
 
-    def get_weather_by_interval(self, city, latitude, longitude, start, end, occurrence_type="daily"):
+    def get_weather_by_interval(self, city, latitude, longitude, start, end, occurrence_type="day"):
         """
         Retrieve weather data for a given location for an interval specified by start and end dates.
 

@@ -1,9 +1,9 @@
-# File: services/GeolocationApiHandler.py
+# File: handlers/GeolocationApiHandler.py
 
 import requests
 import logging
 import json
-from weather_app.services.ApiHandler import ApiHandler, ApiHandlerError
+from weather_app.handlers.ApiHandler import ApiHandler, ApiHandlerError
 
 class GeolocationApiHandler(ApiHandler):
     def __init__(self, api_root, api_key):

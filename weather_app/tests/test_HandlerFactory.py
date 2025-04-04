@@ -2,9 +2,9 @@ import os
 import unittest
 from dotenv import load_dotenv
 from weather_app.helpers.HandlerFactory import HandlerFactory
-from weather_app.services.MongoHandler import MongoHandler
-from weather_app.services.WeatherApiHandler import WeatherApiHandler
-from weather_app.services.GeolocationApiHandler import GeolocationApiHandler
+from weather_app.handlers.MongoHandler import MongoHandler
+from weather_app.handlers.WeatherApiHandler import WeatherApiHandler
+from weather_app.handlers.GeolocationApiHandler import GeolocationApiHandler
 
 class TestHandlerFactory(unittest.TestCase):
 

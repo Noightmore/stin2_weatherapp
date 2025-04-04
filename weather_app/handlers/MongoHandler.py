@@ -1,4 +1,4 @@
-# File: services/MongoHandler.py
+# File: handlers/MongoHandler.py
 
 import logging
 from pymongo import MongoClient, errors

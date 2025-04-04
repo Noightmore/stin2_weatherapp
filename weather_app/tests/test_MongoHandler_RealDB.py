@@ -1,7 +1,7 @@
 import unittest
 import os
 from dotenv import load_dotenv
-from weather_app.services.MongoHandler import MongoHandler
+from weather_app.handlers.MongoHandler import MongoHandler
 import os
 
 

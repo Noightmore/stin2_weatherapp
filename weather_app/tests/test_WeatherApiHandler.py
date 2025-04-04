@@ -3,7 +3,7 @@ import time
 import unittest
 from datetime import datetime, timedelta
 from dotenv import load_dotenv
-from weather_app.services.WeatherApiHandler import (
+from weather_app.handlers.WeatherApiHandler import (
     WeatherApiHandler, WeatherApiError
 )
 
