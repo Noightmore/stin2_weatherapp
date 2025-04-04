@@ -1,4 +1,4 @@
-# File: services/mongo_handler.py
+# File: services/MongoHandler.py
 
 import logging
 from pymongo import MongoClient, errors
@@ -19,10 +19,15 @@ class MongoHandler:
             self.retention_limit = retention_limit
             self.delete_count = delete_count
             logging.info(f"Connected to MongoDB database: {db_name}")
-
         except errors.ConnectionError as ce:
             logging.error("Failed to connect to MongoDB", exc_info=True)
             raise ce
+
+    def __del__(self):
+        """
+        Destructor to ensure MongoDB connection is closed when the object is destroyed.
+        """
+        self.close()
 
     def verify_connection(self):
         """
@@ -36,13 +41,31 @@ class MongoHandler:
             logging.error("MongoDB connection failed", exc_info=True)
             return False
 
-
     def get_collection(self, collection_name):
         """
         Retrieve a collection by name.
         """
         return self.db[collection_name]
 
+    def get_document_count(self, collection_name, query=None):
+        """
+        Get the count of documents in a specified collection.
+        If a query is provided, count only the documents that match the query.
+
+        :param collection_name: Name of the collection.
+        :param query: Optional dictionary representing the query filter.
+        :return: The number of documents.
+        """
+        try:
+            collection = self.get_collection(collection_name)
+            if query is None:
+                query = {}
+            count = collection.count_documents(query)
+            logging.info(f"Collection '{collection_name}' has {count} documents (query: {query}).")
+            return count
+        except Exception as e:
+            logging.error("Error counting documents in collection", exc_info=True)
+            raise e
 
     def insert_document(self, collection_name, document):
         """
@@ -59,11 +82,9 @@ class MongoHandler:
             # After insertion, check retention.
             self.data_retention(collection_name)
             return result.inserted_id
-
         except Exception as e:
             logging.error("Error inserting document", exc_info=True)
             raise e
-
 
     def data_retention(self, collection_name):
         try:
@@ -71,7 +92,6 @@ class MongoHandler:
             count = collection.estimated_document_count()
             logging.info(f"Collection '{collection_name}' has {count} documents.")
             if count > self.retention_limit:
-                # Calculate number to delete so that exactly retention_limit remain.
                 num_to_delete = count - self.retention_limit
                 logging.info(f"Document count {count} exceeds retention limit {self.retention_limit}. Deleting {num_to_delete} oldest records...")
                 oldest_docs = list(collection.find().sort('_id', 1).limit(num_to_delete))
@@ -81,10 +101,8 @@ class MongoHandler:
                     logging.info(f"Deleted {result.deleted_count} documents from {collection_name}.")
                 else:
                     logging.info("No documents found to delete for retention.")
-
         except Exception as e:
             logging.error("Error in data retention process", exc_info=True)
-
 
     def find_one(self, collection_name, query):
         """
@@ -96,7 +114,6 @@ class MongoHandler:
         except Exception as e:
             logging.error("Error finding document", exc_info=True)
             raise e
-
 
     def update_document(self, collection_name, query, update_data):
         """
@@ -111,7 +128,6 @@ class MongoHandler:
             logging.error("Error updating document", exc_info=True)
             raise e
 
-
     def delete_document(self, collection_name, query):
         """
         Delete a document from the specified collection.
@@ -124,7 +140,6 @@ class MongoHandler:
         except Exception as e:
             logging.error("Error deleting document", exc_info=True)
             raise e
-
 
     def close(self):
         """

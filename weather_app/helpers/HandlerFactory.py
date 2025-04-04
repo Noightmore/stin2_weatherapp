@@ -5,6 +5,7 @@ import logging
 from dotenv import load_dotenv
 from weather_app.services.MongoHandler import MongoHandler
 from weather_app.services.WeatherApiHandler import WeatherApiHandler
+from weather_app.services.GeolocationApiHandler import GeolocationApiHandler
 
 class HandlerFactory:
     def __init__(self, env_paths):
@@ -63,5 +64,21 @@ class HandlerFactory:
             raise Exception("OPEN_WEATHER_API or OPEN_WEATHER_API_KEY not set in environment variables.")
         return WeatherApiHandler(api_root, api_key)
 
+
+    def get_geolocation_handler(self):
+        """
+        Initialize and return a GeolocationApiHandler instance using environment variables.
+
+        Expected environment variables:
+          - GEOCODING_API: Root URL for the geocoding API.
+          - OPEN_WEATHER_API_KEY: The API key (used for geocoding as well).
+
+        :return: An instance of GeolocationApiHandler.
+        """
+        api_root = os.getenv("GEOCODING_API")
+        api_key = os.getenv("OPEN_WEATHER_API_KEY")
+        if not api_root or not api_key:
+            raise Exception("GEOCODING_API or OPEN_WEATHER_API_KEY not set in environment variables.")
+        return GeolocationApiHandler(api_root, api_key)
 
 # todo: add postgres handler; add all handler creation methods to this class

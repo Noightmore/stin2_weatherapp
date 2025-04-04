@@ -6,9 +6,11 @@ import time
 import logging
 from datetime import datetime
 import json
+from weather_app.services.ApiHandler import ApiHandler, ApiHandlerError, BadRequestError, UnauthorizedError, \
+    NotFoundError, TooManyRequestsError, UnexpectedError
 
 
-class WeatherApiHandler:
+class WeatherApiHandler(ApiHandler):
     def __init__(self, api_root, api_key):
         """
         Initialize the WeatherApiHandler.
@@ -16,6 +18,7 @@ class WeatherApiHandler:
         :param api_root: The root URL of the API (e.g., "https://history.openweathermap.org/data/2.5/history/")
         :param api_key: The API key string.
         """
+        super().__init__(api_root, api_key)
         self.api_root = api_root.rstrip('/') + '/'
         self.api_key = api_key
         self.last_json = None
@@ -40,28 +43,28 @@ class WeatherApiHandler:
         logging.info("Dummy call successful.")
 
 
-    def _handle_error(self, response):
-        """
-        Raise an appropriate exception based on the API response status code.
-        """
-        code = response.status_code
-        # You can parse additional details from response.json() if needed.
-        try:
-            error_info = response.json()
-        except Exception:
-            error_info = {}
-        if code == 400:
-            raise BadRequestError(f"400 - Bad Request: {error_info.get('message', 'Missing or incorrect parameters')}")
-        elif code == 401:
-            raise UnauthorizedError("401 - Unauthorized: API token missing or invalid for this API")
-        elif code == 404:
-            raise NotFoundError(f"404 - Not Found: No data found for the requested parameters {error_info}")
-        elif code == 429:
-            raise TooManyRequestsError("429 - Too Many Requests: API quota exceeded")
-        elif 500 <= code < 600:
-            raise UnexpectedError(f"{code} - Unexpected Error: Contact support with details of your API request")
-        else:
-            raise WeatherApiError(f"{code} - Unexpected error (wtf?): {error_info}")
+    # def _handle_error(self, response):
+    #     """
+    #     Raise an appropriate exception based on the API response status code.
+    #     """
+    #     code = response.status_code
+    #     # You can parse additional details from response.json() if needed.
+    #     try:
+    #         error_info = response.json()
+    #     except Exception:
+    #         error_info = {}
+    #     if code == 400:
+    #         raise BadRequestError(f"400 - Bad Request: {error_info.get('message', 'Missing or incorrect parameters')}")
+    #     elif code == 401:
+    #         raise UnauthorizedError("401 - Unauthorized: API token missing or invalid for this API")
+    #     elif code == 404:
+    #         raise NotFoundError(f"404 - Not Found: No data found for the requested parameters {error_info}")
+    #     elif code == 429:
+    #         raise TooManyRequestsError("429 - Too Many Requests: API quota exceeded")
+    #     elif 500 <= code < 600:
+    #         raise UnexpectedError(f"{code} - Unexpected Error: Contact support with details of your API request")
+    #     else:
+    #         raise WeatherApiError(f"{code} - Unexpected error (wtf?): {error_info}")
 
 
     def get_weather_n_days_into_future_by_date(self, city, latitude, longitude, start, count, occurrence_type="daily"):
@@ -182,30 +185,6 @@ class WeatherApiHandler:
         return self.last_json
 
 
-
-    def get_last_json(self):
-        """
-        Return the last JSON response received from the API. Nicely formatted.
-        """
-        formatted_json = json.dumps(self.last_json, indent=4, sort_keys=True)
-        return formatted_json
-
-
-class WeatherApiError(Exception):
+class WeatherApiError(ApiHandlerError):
     """Base exception for Weather API errors."""
-    pass
-
-class BadRequestError(WeatherApiError):
-    pass
-
-class UnauthorizedError(WeatherApiError):
-    pass
-
-class NotFoundError(WeatherApiError):
-    pass
-
-class TooManyRequestsError(WeatherApiError):
-    pass
-
-class UnexpectedError(WeatherApiError):
     pass
